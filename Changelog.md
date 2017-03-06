@@ -3,7 +3,8 @@
 Please READ this changelog before performing the update on your current Framework Version.
 
 ## Versions
-- 1.2.1 ( This Version | Stable )
+- 1.2.2 ( This Version | Stable )
+- 1.2.1
 - 1.2.0
 - 1.0.1 [ Beta ]
 - 1.0.0 [ Beta ]
