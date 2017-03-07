@@ -32,24 +32,42 @@
     define('DB_ENG_DIR',MAINDIR . 'Library/Engines/Databases/');
     define('CONTROLLERS_DIR',MAINDIR . 'Controllers/');
     define('TEMPLATES_DIR',MAINDIR . 'Templates/');
+    define('LIBRARIES_DIR',MAINDIR . 'Library/Libraries/');
+    define('LOCAL_DIR',MAINDIR . 'Library/Local/');
+
+
     //define('TEMPLATES_DIR',MAINDIR . 'Templates/');
     $lang = array();
-    if ($Settings['INTILISENSE_DEBUGGER'] === TRUE){
-    require_once ( 'Library/Local/IntiliSense.php' );
-      \php_error\reportErrors(); }
+    if ($Settings['DEVELOPMENT_MODE'] == TRUE)
+    {
+      ini_set("display_errors", 1);
+      error_reporting(E_ALL | E_STRICT);
+
+    if ($Settings['INTILISENSE_DEBUGGER'] === TRUE)
+    {
+
+      if (strtolower($Settings['INTILISENSE_INTERFACE']) == 'ui') {
+        require_once __DIR__ . '/Library/Vendor/autoload.php';
+        $IntiliSense = new \IntiliSense\Run;
+        $IntiliSense->pushHandler(new \IntiliSense\Handler\PrettyPageHandler);
+        $IntiliSense->register();
+      }else
+      {
+        require_once ( 'Library/Local/IntiliSense.php' );
+          \php_error\reportErrors();
+      }
+
+    }
+  }
 
     require_once("Library/Autoloader.php");
-
     require_once("Library/Functions/Core.php");
     require_once("Library/Functions/Exceptions.php");
     DefSettings();
     $protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
     define('SITEBASE', $protocol.BASE_URL."/");
     //LoadFunctions();
-    if (DEVELOPMENT_MODE == TRUE)
-    {
-      ini_set("display_errors", 1);
-    }
+    if (INTILISENSE_DEBUGGER === FALSE){
     set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
         // error was suppressed with the @-operator
         if (0 === error_reporting()) {
@@ -65,7 +83,7 @@
         throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
     });
     set_exception_handler("default_exception_handler");
-
+  }
     global $_SESSION;
     $_SESSION["DEV_LOADED_PAGES"] = array();
     $_SESSION["DEV_LOADED_CONTROLLERS"] = array();
@@ -79,7 +97,11 @@
     static $_LOADED_CONTROLLERS = array();
     static $_DEV_LOADED_PAGES = array();
     static $_DEV_LOADED_MODELS = array();
+    static $_DEV_LOADED_ENGINES = array();
+    static $_DEV_LOADED_LIBRARIES = array();
+    static $_DEV_LOADED_HELPERS = array();
     static $_CONSOLE_OUTPUT   = array();
+    static $_FILES_AUTOLOADED = array();
     static $_FRAMEWORK_VER = "1.2.2";
     $db = ($Settings["USE_SQL"]) ? new mysqli($DBCONFIG["DB_HOST"], $DBCONFIG["DB_USER"], $DBCONFIG["DB_PASS"], $DBCONFIG["DB_NAME"]) : false;
 
@@ -89,8 +111,9 @@
             FN_DIR,
             MD_DIR,
             LANG_DIR,
-            
-            DB_ENG_DIR ), false);
+            DB_ENG_DIR,
+            MDL_DIR,
+            CONTROLLERS_DIR), false);
 
       // For Debugging, We can print the output.
       $_AUTOLOADED = Autoloader();

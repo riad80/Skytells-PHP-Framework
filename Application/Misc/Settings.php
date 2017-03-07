@@ -55,6 +55,19 @@
       $Settings["INTILISENSE_DEBUGGER"] = TRUE;
 
 
+      /**
+       *You have TWO options here ( UI ) OR ( BASH )
+       * @method UI :
+       * Displays Erros, Exeptions, In a virtual Userinterface,
+       * This Option will be good for non-advanced PHP Programmers.
+       * @method BASH :
+       * Dsually, This method is used by the advanced programmers, it Displays
+       * Errors, Warnings, Exceptions by a deffrent method, offering an advanced
+       * Tools for Debugging during RunTime. */
+       $Settings["INTILISENSE_INTERFACE"] = "UI"; // UI or BASH
+
+
+
 
  /* Facebook Login --------------------------------------------------------
     * Please fill em out with your Facebook App Details. */

@@ -10,7 +10,7 @@
  * @author Dr. Hazem Ali ( fb.com/Haz4m )
  * @see The Framework's changelog to be always up to date.
  */
-  Class HomeController extends Controller
+  Class Home extends Controller
     {
 
       public function __construct($ref = "Core")
@@ -20,7 +20,7 @@
           parent::__construct();
 
           // Log some text in the Console.
-          $this->console->log("HomeController has been called from ". $ref);
+          //$this->console->log("HomeController has been called from ". $ref);
 
           // --------- TemplateEngine Library ( Optional )
           /* Please refere to the Docs. to learn how to use it.
@@ -45,34 +45,34 @@
 
 
           // -------- Displaying Index when Controller being called.
-          if ($ref !== "HomeChildController"){
-              $this->index();
-            }
+
         }
 
+      /**
+       * @method Index function.
+       * This function cannot be deleted.
+       */
       public function index($arg1 = "", $arg2 = "")
         {
           // Access this function from ( http://www.domain.com/{Framework_FOLDER}/HomeController/index/ )
 
-          $this->view->render("Home/index.php");
+        //  $this->load->helper("HtmlParser");
+        //  $html = file_get_html("http://localhost/Framework");
+        //  echo $html;
+      
+        $this->view->HelloWorld = $this->SayHello();
+        $this->view->render("index.php");
+
         }
-      public function PerformSQLTest()
+
+
+      protected function SayHello()
         {
-          // A Simple function to fetch MySQL Table ( Users )
-         if (USE_SQL == true)
-            {
-              // 1. => Loading the HomeModel
-                  $this->load->model("HomeModel");
-
-              // 2. => Register the Model to a new Object.
-                  $this->HomeModel = new HomeModel();
-
-
-              // 3. => Perform the Model Function.
-                  $results = $this->HomeModel->getUsers();
-
-             return $results;
-            }
-
+          return "<p>Thanks for using Skytells Framework for PHP.</p>
+            <p>This is a Hello World Example!</p>
+            <p>You can change this Page by going to : Application/Views/Home/Index.php</p>
+            <p>You're free to customize your Web-Application As ( MVC or MVHC ) or Even ( Static ) Method.</p>
+            <p>You're free to Add your Classes, Controllers, Functions, Modules into (Views) Folder.</p>
+            <p> This text comes from your default controller (Application/Controllers/Home.php)</p></div><br>";
         }
     }

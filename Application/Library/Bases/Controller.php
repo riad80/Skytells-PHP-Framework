@@ -35,15 +35,7 @@
 
 
 
-      /**
-      * @method Initializing Requqired Controllers
-      * PLEASE DO NOT TOUCH THIS CONTROLLER.
-      */
-      public function __autoload($_CLASS)
-        {
-          //class directories
-           require $_CLASS;
-        }
+
       public function canClassBeAutloaded($className)
         {
           return class_exists($className);
@@ -70,7 +62,7 @@
                         'prefix' => DB_PREFIX,
                         'charset' => DB_CHARSET);
 
-              return $this;
+              //return $this;
             }
             catch(Exception $e)
             {
@@ -123,12 +115,9 @@
             $this->LoadFunctions();
 
             $this->InitServices();
-            if (AUTO_LOAD_CONTROLLERS == true){
-            $this->loadControllers(); }
+
             $this->InitModules();
-            if (AUTO_LOAD_MODELS && AUTO_LOAD_MODELS == TRUE){
-            $this->LoadModels();
-            }
+
           //  $this->InitiCoreEngines();
 
             if(isset($_SESSION['lang']))
@@ -175,15 +164,16 @@
               $this->Debugger = $debugger;
                 $this->CheckCoreRequirements();
                 $this->checkExtentions();
-              set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
-                  // error was suppressed with the @-operator
-                  if (0 === error_reporting()) {
-                      return false;
-                  }
-                  $this->Debugger->ShowError($errno, $errstr, $errfile, $errline, $errcontext);
-                  throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-              });
-
+                if (INTILISENSE_DEBUGGER === FALSE){
+                set_error_handler(function($errno, $errstr, $errfile, $errline, array $errcontext) {
+                    // error was suppressed with the @-operator
+                    if (0 === error_reporting()) {
+                        return false;
+                    }
+                    $this->Debugger->ShowError($errno, $errstr, $errfile, $errline, $errcontext);
+                    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+                });
+              }
 
 
 

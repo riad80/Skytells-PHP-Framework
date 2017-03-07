@@ -36,10 +36,10 @@
 
 
   // map homepage ( / ) Without parameters
-    $router->map('GET|POST', "/",  function(){
-      loadPage('Home/index.php');
+  //  $router->map('GET|POST', "/",  function(){
+  //    loadPage('Home/index.php');
 
-     });
+    // });
 
 
 

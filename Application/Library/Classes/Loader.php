@@ -13,6 +13,7 @@
    Class Loader
     {
       public function __construct() {
+
         $this->Runtime = new Runtime();
         }
 
@@ -93,6 +94,64 @@
                     throw new Exception("Unable to load : ".$File." Please make sure to type the file name correctly.", 91);
                   }
           }
+
+      /**
+      * @method Initializing a Single Lib
+      * - Models Stored in ( Models ) Folder
+      */
+      public function library($File, $Args = null, $createObject = false)
+        {
+          $path = BASEPATH.'/Application/Library/Libraries/';
+            if (!is_dir($path)){
+              throw new Exception("The Engines Folder does not exist in the main Application/Library/Libraries dir.", 90);
+                  return false;
+              }
+              if (!Contains($File, '.php')){
+                  $File = $File.".php";
+                }
+              if ($Args == true || $Args == false) { $createObject = $Args; $Args = null; }
+              if (file_exists($path.$File)){
+                $class_name = str_replace(".php", "", $File);
+                  if (!class_exists($class_name)){
+
+                      set_include_path($path);
+                      spl_autoload_extensions('.php');
+                      spl_autoload($class_name);
+                      if ($createObject == true) {
+
+                      if ($Args == null){ $this->$class_name = new $class_name(); }else {
+                        $this->{$class_name} = new $class_name($Args);
+                        }
+                      }
+                      $this->Runtime->ReportLibrary($path.$File);
+
+                      }
+                      }else {
+                  throw new Exception("Unable to load : ".$File." Please make sure to type the file name correctly.", 91);
+                  }
+            }
+
+      /**
+      * @method Initializing a Single Helper
+      * - Models Stored in ( Models ) Folder
+      */
+      public function helper($File)
+        {
+          $path = BASEPATH.'/Application/Library/Helpers/';
+            if (!is_dir($path)){
+              throw new Exception("The Helper Folder does not exist in the main Application/Library/Helpers dir.", 90); return false; }
+                    if (!Contains($File, '.php')){ $File = $File.".php"; }
+
+                    if (file_exists($path.$File)){
+                      require_once $path.$File;
+                      $this->Runtime->ReportHelper($path.$File);
+                      }else {
+                        throw new Exception("Unable to load : ".$File." Please make sure to type the file name correctly.", 91);
+                }
+          }
+
+
+
 
 
       public function getClassFullNameFromFile($filePathName)

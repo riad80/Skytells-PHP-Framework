@@ -6,7 +6,7 @@
       {
         if ($ReturnType != "Page") { return false; }
           if (DEVELOPMENT_MODE == true){
-            throw new  Exception("Error: Requested Controller [ ".$ClassName." ] Does not exist.", 1);
+            throw new  Exception("Error: Requested Controller [ ".$ClassName." ] Does not exist.\r\n You're seeing this Exception because you're in the development mode.", 8);
             }else{
               header("HTTP/1.0 404 Not Found");
               require MAINDIR.'Library/System/html/404.html'; exit;
@@ -24,7 +24,7 @@
         {
           if ($ReturnType != "Page") { return false; }
             if (DEVELOPMENT_MODE == true){
-              throw new  Exception("Error: Requested Function [ ".$Function." ] Does not exist in Controller [ $ClassName ]. ", 1);
+              throw new  Exception("Error: Requested Function [ ".$Function." ] Does not exist in Controller [ $ClassName ]. ", 9);
               }else{
                 header("HTTP/1.0 404 Not Found");
                 require MAINDIR.'Library/System/html/404.html'; exit;

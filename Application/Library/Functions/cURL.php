@@ -10,7 +10,7 @@
  * @author Dr. Hazem Ali ( fb.com/Haz4m )
  * @see The Framework's changelog to be always up to date.
  */
-  function HttpRequest($Uri, $Posts, $Method = "POST")
+  function HttpRequest($Uri, $Posts = "", $Method = "POST")
   {
 
     $ch = curl_init();

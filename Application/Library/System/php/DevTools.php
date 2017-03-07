@@ -14,7 +14,7 @@
    $CHelpers = "";
    $CPages = "";
    $CLines = "";
-   global $_CONSOLE_OUTPUT; global $_DEV_LOADED_MODELS; global $_DB_CONNECTION_STATUS;
+   global $_CONSOLE_OUTPUT; global $_DEV_LOADED_MODELS; global $_DB_CONNECTION_STATUS; global $_FILES_AUTOLOADED;
       global $startScriptTime;
       $endScriptTime=microtime(TRUE);
       $totalScriptTime=$endScriptTime-$startScriptTime;
@@ -247,16 +247,29 @@
         <div  id="AutoloaderResults" class="ta10" style="width: 100%;  overflow-x:auto;" >
           <?
            global $_AUTOLOADED;
+           echo "Summary : <br>";
+            echo "&nbsp; Resources used by this viewer (".count($_AUTOLOADED).") Folder(s) and (".count($_FILES_AUTOLOADED).") File(s).<br>";
             echo "Scanned Folders : ".count($_AUTOLOADED)."<br>";
            foreach ($_AUTOLOADED as $key => $value) {
 
-          try {
-            echo "&nbsp; Library :> " .rtrim(rtrim(ltrim($value, '//'), '/'), "\/") .' ( OK )<br>';
-          } catch (Exception $e) {
-              echo "Skipped";
-          }
+                try {
+                  echo "&nbsp; Library :> " .rtrim(rtrim(ltrim($value, '//'), '/'), "\/") .' ( OK )<br>';
+                } catch (Exception $e) {
+                    echo "Skipped";
+                }
 
            }
+           echo "Autoloaded : ".count($_FILES_AUTOLOADED)."<br>";
+           foreach ($_FILES_AUTOLOADED as $key => $value) {
+
+                try {
+                  echo "&nbsp; File :> " .rtrim(rtrim(ltrim($value, '//'), '/'), "\/") .' ( OK )<br>';
+                } catch (Exception $e) {
+                    echo "Skipped";
+                }
+
+           }
+
            ?>
           <br>
         </div>

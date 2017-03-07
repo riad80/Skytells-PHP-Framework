@@ -79,9 +79,9 @@
          {
            try
            {
-             global $_SESSION; global $_CONSOLE_OUTPUT;
+             global $_SESSION; global $_CONSOLE_OUTPUT; global $_DEV_LOADED_LIBRARIES; global $_DEV_LOADED_ENGINES;
              array_push($this->LoadedEngines, $Engine);
-             array_push($_SESSION["DEV_LOADED_ENGINES"], $Engine);
+             array_push($_DEV_LOADED_ENGINES, $Engine);
              array_push($_CONSOLE_OUTPUT, "Engine Loaded : ". $Engine);
              return true;
            } catch (Exception $e) {
@@ -89,7 +89,20 @@
            }
 
          }
+      public function ReportLibrary($Engine)
+        {
+          try
+            {
+                global $_SESSION; global $_CONSOLE_OUTPUT; global $_DEV_LOADED_LIBRARIES; global $_DEV_LOADED_ENGINES;
 
+                array_push($_DEV_LOADED_LIBRARIES, $Engine);
+                array_push($_CONSOLE_OUTPUT, "Library Loaded : ". $Engine);
+                return true;
+            } catch (Exception $e) {
+                throw new Exception("Runtime Error : " . $e->getMessage(), 2);
+            }
+
+        }
       public function ReportController($Controller)
         {
           try
@@ -124,7 +137,18 @@
             }
           }
 
+      public function ReportHelper($Helper){
+        try
+        {
+          global $_SESSION; global $_DEV_LOADED_HELPERS; global $_CONSOLE_OUTPUT;
 
+          array_push($_DEV_LOADED_HELPERS, $Helper);
+          array_push($_CONSOLE_OUTPUT, "Helper Loaded : ". $Helper);
+          return true;
+        } catch (Exception $e) {
+          throw new Exception("Runtime Error : " . $e->getMessage(), 2);
+        }
+      }
       public function ReportPage($Page)
         {
           try

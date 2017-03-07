@@ -10,18 +10,18 @@
  * @author Dr. Hazem Ali ( fb.com/Haz4m )
  * @see The Framework's changelog to be always up to date.
  */
-  Class HomeChildController extends HomeController
+  Class HomeChildController extends Home
     {
 
       public function __construct()
         {
           parent::__construct("HomeChildController");
-          $this->console->logEvent("Event", "HomeChildController Loaded!");
+          //$this->console->logEvent("Event", "HomeChildController Loaded!");
         }
       public function SayHello()
         {
 
-          return "	<p>Thanks for using Skytells Framework v1.2.2 for PHP.</p>
+          return "	<p>Thanks for using Skytells Framework for PHP.</p>
             <p>This is a Hello World Example!</p>
             <p>You can change this Page by going to : Application/Views/Home/Index.php</p>
             <p>You're free to customize your Web-Application As ( MVC or MVHC ) or Even ( Static ) Method.</p>

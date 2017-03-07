@@ -98,7 +98,7 @@ function Autoloader($class_paths = NULL, $use_base_dir = true)
 	{
 		// class with namespaces, ex: 'MyPack\MyClass' => 'MyPack/MyClass' (directories)
 		$class_path = str_replace('\\', DIRECTORY_SEPARATOR, $class_paths);
-
+			global $_FILES_AUTOLOADED; global $_LOADED_CONTROLLERS; global $_DEV_LOADED_MODELS;
 		foreach($paths as $path)
 		{
 			if(!is_array($path)) // do not allow cached 'loaded' paths
@@ -117,6 +117,30 @@ function Autoloader($class_paths = NULL, $use_base_dir = true)
 							}
 							$paths['loaded'][] = $path . $class_path . $ext;
 						}
+						$full_file = $path . $class_path . $ext;
+
+						// ------------------------------------------------
+						global $Settings;
+						if ($Settings["DEVELOPMENT_MODE"] == TRUE)
+						{
+
+							array_push($_FILES_AUTOLOADED, $full_file);
+
+
+						if (strpos(strtolower($full_file), 'controllers') !== false)
+							{
+								array_push($_LOADED_CONTROLLERS, $full_file);
+
+							}
+
+							if (strpos(strtolower($full_file), 'models') !== false)
+								{
+									array_push($_DEV_LOADED_MODELS, $full_file);
+
+								}
+						}
+
+						// ---------------------------------------------------
 						require $path . $class_path . $ext;
 						return true;
 					}

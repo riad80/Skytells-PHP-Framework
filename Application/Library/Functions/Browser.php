@@ -103,10 +103,13 @@
 
   function checkBrowser($checkCookies = false, $checkJavascript = false)
     {
+      global $_SERVER;
+      if (!isset($_SERVER)){ return false; }
 
-      $res = $_SERVER["HTTP_USER_AGENT"];
+        $res = $_SERVER['HTTP_USER_AGENT'];
       if (empty($res) || $res == "unknown") { return false; }
       if ($checkCookies == true && $res["cookies"] == 0) { return false; }
       if ($checkJavascript == true && $res["javascript"] == 0) { return false; }
+
       return true;
     }

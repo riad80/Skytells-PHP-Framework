@@ -63,9 +63,9 @@
   }
 
 
-  function Contains($String, $Input)
+  function Contains($FullContentString, $strToFind)
     {
-      if (strpos($String, $Input) !== false)
+      if (strpos($FullContentString, $strToFind) !== false)
        {
       	 return true;
        } else {
@@ -164,15 +164,23 @@
       return $Settings["BASE_URL"];
     }
 
-  function t($string)
+  function t($string, $check = false)
     {
-    //  if (is_bool($string)) { return $string; }
-      echo $string;
+      if ($check == true){
+        if (isset($check) && !empty($check) ) { echo $string; } else { echo "{ $string } is not set!"; }
+      }else{
+          echo $string;
+      }
+    
     }
 
-  function d($array)
+  function d($array, $json = false)
     {
-      var_dump($array);
+      if ($json == true){
+        echo json_encode($array, JSON_PRETTY_PRINT);
+
+      }else {
+      var_dump($array); }
     }
 
   function p_array($array)
